@@ -18,7 +18,7 @@ DATASET_NAMES = ['IMDB-MULTI']
 
 BATCH_SIZE = 20
 EPOCHS = 200
-FOLDS = 3
+FOLDS = 10
 LEARNING_RATE = 1e-2
 WEIGHT_DECAY = 1e-5
 SCHEDULER_PATIENCE = 10
@@ -49,7 +49,6 @@ for dataset_name in DATASET_NAMES:
         # Iterating through the folds
         for fold in range(FOLDS):
             print(f'@@@@@@@@@@@@@@@@@ [*] Dataset {dataset_name}, Config: {config_name}, Fold: {fold}')
-            result_file = open(f'results/{dataset_name}_{config_name[:-5]}_{fold}.txt', 'w')
             wait = None
 
             dataset = dataset.shuffle()
@@ -139,8 +138,6 @@ for dataset_name in DATASET_NAMES:
                       'Val Acc: {:.2f}, Test Loss: {:.3f}, Test Acc: {:.2f}, Elapsed Time: {:.1f}'\
                     .format(epoch, train_loss, train_acc, val_loss, val_acc, test_loss, test_acc, elapse_time)
                 print(log)
-                result_file.write(log + '\n')
-                result_file.flush()
 
                 # Early-Stopping
                 if val_loss < best_val_loss:
@@ -153,8 +150,5 @@ for dataset_name in DATASET_NAMES:
                 # early stopping
                 if wait == EARLY_STOPPING_PATIENCE:
                     print('======== Early stopping! ========')
-                    result_file.write('======== Early stopping! ========' + '\n')
-                    result_file.flush()
                     break
 
-            result_file.close()

@@ -28,12 +28,6 @@ with open('../configs/config_files/arch1-conf1.json', 'rb') as handle:
 
 model = Net(net_config, input_dim=dataset.num_features, num_classes=dataset.num_classes).to(device)
 
-# model = GNN(in_channels=dataset.num_features,
-#             forward_expansion=8,
-#             out_channels=dataset.num_classes,
-#             hidden_channels=32,
-#             mode='entropy').to(device)
-
 optimizer = torch.optim.Adam(model.parameters(), lr=1e-3, weight_decay=0)
 
 nll_loss = torch.nn.NLLLoss()
