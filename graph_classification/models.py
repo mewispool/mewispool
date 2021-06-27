@@ -1,8 +1,7 @@
 import torch
 import torch.nn as nn
-
-from torch_geometric.nn import GINConv, DenseGINConv
-from torch_geometric.utils import get_laplacian, to_dense_adj
+from torch_geometric.nn import GINConv
+from torch_geometric.utils import get_laplacian
 
 
 class MLP(nn.Module):
