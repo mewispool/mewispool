@@ -1,24 +1,19 @@
 import os.path as osp
-from math import ceil
-import json
 import time
 import torch
 import os
 from torch_geometric.datasets import TUDataset
 from torch_geometric.data import DataLoader
-from graph_classification.models_new import Net, Net2, Net3
-from torch_geometric.transforms import OneHotDegree
+from models import Net3
+
 
 torch.manual_seed(7)
-OTHER_DATASET_NAMES = ['NCI1', 'NCI109', 'PROTEINS_full', 'REDDIT-BINARY']
-#'DD',
-# 'PROTEINS', 'ENZYMES', 'COLLAB', 'IMDB-BINARY', 'IMDB-MULTI',
-#                  'FRANKENSTEIN', 'MUTAG', 'Mutagenicity'
-DATASET_NAME = 'MUTAG'
+os.makedirs('checkpoints', exist_ok=True)
 
+DATASET_NAME = 'MUTAG'
 BATCH_SIZE = 20
+HIDDEN_DIM = 32
 EPOCHS = 200
-FOLDS = 10
 LEARNING_RATE = 1e-2
 WEIGHT_DECAY = 1e-5
 SCHEDULER_PATIENCE = 10
@@ -45,7 +40,7 @@ train_loader = DataLoader(train_dataset, batch_size=BATCH_SIZE, shuffle=True)
 device = torch.device('cpu')
 
 # Model, Optimizer and Loss definitions
-model = Net3(input_dim=input_dim, hidden_dim=32, num_classes=num_classes).to(device)
+model = Net3(input_dim=input_dim, hidden_dim=HIDDEN_DIM, num_classes=num_classes).to(device)
 optimizer = torch.optim.Adam(model.parameters(), lr=LEARNING_RATE, weight_decay=WEIGHT_DECAY)
 scheduler = torch.optim.lr_scheduler.ReduceLROnPlateau(optimizer=optimizer,
                                                        patience=SCHEDULER_PATIENCE,
