@@ -20,3 +20,19 @@ our method, referred to as Maximum Entropy Weighted Independent Set Pooling
 problem of the maximum independent set. Empirical results demonstrate that our
 method achieves the state-of-the-art and competitive results on graph classification
 tasks and the maximum independent set problem in several benchmark datasets.
+
+## Requirements
+* Python >= 3.6.
+* Pytorch=1.9.0.
+* Torch Geometric=1.5.0
+
+## Run
+For running the graph classification code, initially clone the repository.
+Give the execution permission to `run_graph_classification.sh`: `chmod +x run_graph_classification.sh`.
+Finally, run `./run_graph_classification.sh`.
+For the MIS task, follow the same procedure for the `run_mis.sh`. Note that the graph classification
+experiment is conducted over the MUTAG dataset and the MIS task is solved over the Cora dataset. 
+
+In case of failure in installation of the dependencies, please refer to [Pytorch Installation](https://pytorch.org/) and 
+[Torch Geometric Installation](https://pytorch-geometric.readthedocs.io/en/latest/notes/installation.html).
+
