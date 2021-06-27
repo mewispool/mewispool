@@ -1,14 +1,18 @@
-from MIS.models import MISSolver
+import os
+import os.path as osp
+from models import MISSolver
 from torch_geometric.datasets import Planetoid
 import torch.optim as optim
 import torch
 import time
 
 
+os.makedirs('checkpoints', exist_ok=True)
 device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 
-name = 'Citeseer'
-dataset = Planetoid('data/', name=name)
+path = osp.join(osp.dirname(osp.realpath(__file__)), 'data')
+name = 'Cora'
+dataset = Planetoid(path, name=name)
 num_nodes = dataset.data.train_mask.size(0)
 edge_index = dataset.data.edge_index
 w = torch.ones(num_nodes, dtype=torch.float32)
