@@ -2,8 +2,8 @@ import numpy as np
 import torch
 import inspect
 import torch.nn as nn
-from torch_geometric.nn import GINConv, GCNConv
-from torch_geometric.utils import get_laplacian, to_dense_batch, to_dense_adj
+from torch_geometric.nn import GINConv
+from torch_geometric.utils import to_dense_batch, to_dense_adj
 
 
 class MLP(nn.Module):
@@ -35,23 +35,17 @@ class MLP(nn.Module):
 class MISSolver(nn.Module):
     def __init__(self):
         super(MISSolver, self).__init__()
-        # self.conv1 = GCNConv(in_channels=1, out_channels=128)
-        # self.conv2 = GCNConv(in_channels=128, out_channels=128)
-        # self.conv3 = GCNConv(in_channels=128, out_channels=128)
-        # self.conv4 = GCNConv(in_channels=128, out_channels=128)
-        # self.conv5 = GCNConv(in_channels=128, out_channels=128)
-        # self.conv6 = GCNConv(in_channels=128, out_channels=1)
 
         self.conv1 = GINConv(nn=MLP([1, 64, 64, 64]), train_eps=True)
         self.conv2 = GINConv(nn=MLP([64, 64, 64, 64]), train_eps=True)
         self.conv3 = GINConv(nn=MLP([64, 64, 64, 64]), train_eps=True)
-        # self.conv4 = GINConv(nn=MLP([64, 64, 64, 64]), train_eps=True)
+        self.conv4 = GINConv(nn=MLP([64, 64, 64, 64]), train_eps=True)
         self.conv5 = GINConv(nn=MLP([64, 64, 64, 64]), train_eps=True)
         self.conv6 = GINConv(nn=MLP([64, 64, 64, 1]), train_eps=True)
         self.bn1 = nn.BatchNorm1d(num_features=64)
         self.bn2 = nn.BatchNorm1d(num_features=64)
         self.bn3 = nn.BatchNorm1d(num_features=64)
-        # self.bn4 = nn.BatchNorm1d(num_features=64)
+        self.bn4 = nn.BatchNorm1d(num_features=64)
         self.bn5 = nn.BatchNorm1d(num_features=64)
 
     def forward(self, w, edge_index, batch):
